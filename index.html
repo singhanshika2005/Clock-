@@ -1,29 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./clock.css">
-    <title>Clock</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analog Clock</title>
+    <link rel="stylesheet" href="./clock.css" />
 </head>
 
 <body>
-    <div class="Circle">
-        <video src="./clockbg.mp4" autoplay muted loop></video>
 
+  <div class="Circle">
+    <video src="./clockbg.mp4" autoplay muted loop></video>
 
-        <div class="clock-items" id="top">12</div>
-        <div class="clock-items" id="right">3</div>
-        <div class="clock-items" id="bottom">6</div>
-        <div class="clock-items" id="left">9</div>
-        <div class="clock-items" id="center"> </div>
-        <div class="clock-items" id="hour"></div>
-        <div class="clock-items" id="minute"></div>
-        <div class="clock-items" id="second"></div>
+    <!-- Minute dots -->
+    <div class="minute-ring"></div>
 
-    </div>
+    <!-- Numbers -->
+    <div class="num n12">12</div>
+    <div class="num n1">1</div>
+    <div class="num n2">2</div>
+    <div class="num n3">3</div>
+    <div class="num n4">4</div>
+    <div class="num n5">5</div>
+    <div class="num n6">6</div>
+    <div class="num n7">7</div>
+    <div class="num n8">8</div>
+    <div class="num n9">9</div>
+    <div class="num n10">10</div>
+    <div class="num n11">11</div>
+
+    <!-- Hands -->
+    <div id="hour" class="hand"></div>
+    <div id="minute" class="hand"></div>
+    <div id="second" class="hand"></div>
+
+    <!-- Center -->
+    <div id="center"></div>
+  </div>
+
+  <script>
+    function updateClock(){
+      const now = new Date();
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const ist = new Date(utc + 5.5 * 60 * 60 * 1000);
+
+      const s = ist.getSeconds();
+      const m = ist.getMinutes();
+      const h = ist.getHours() % 12;
+
+      document.getElementById("second").style.transform = `rotate(${s * 6}deg)`;
+      document.getElementById("minute").style.transform = `rotate(${m * 6 + s * 0.1}deg)`;
+      document.getElementById("hour").style.transform   = `rotate(${h * 30 + m * 0.5}deg)`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
 
 </body>
-
 </html>
